@@ -4,15 +4,22 @@ import {TouchableHighlight, ScrollView} from 'react-native-gesture-handler'
 import {createStackNavigator, createAppContainer} from 'react-navigation'
 
 export function SingleGroup(props) {
+  console.log(props.navigation)
+  const {navigation} = props
+  const name = navigation.getParam('name', 'No Group Name')
+  const goal = navigation.getParam('goal', 'This group has no ambition')
+  const members = navigation.getParam('members', 'No Group Members')
+
   return (
     <View style={styles.postContainer}>
-      {/* <View style={styles.container}>
-        <Text style={styles.groupname}>{props.name}</Text>
+      <View style={styles.container}>
+        <Text style={styles.groupname}>{name}</Text>
+        <Text style={styles.groupinfo}>{goal}</Text>
       </View>
-      <ScrollView style = {styles.container}>
-      <Text style={styles.groupinfo}>{props.goal}</Text>
-      </ScrollView> */}
-      <Text>Test</Text>
+      <ScrollView contentContainerStyle={styles.container}>
+        <Text>Members go in here</Text>
+      </ScrollView>
+      <Text />
     </View>
   )
 }

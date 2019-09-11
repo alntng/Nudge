@@ -15,6 +15,7 @@ import {Header} from './components/Header'
 import {GroupList} from './components/GroupList'
 import {collectAll} from './firebase/functions'
 import {firestore, firebaseApp} from './firebase/firebase'
+import {SingleGroup} from './components/SingleGroups'
 
 const HomePage = props => {
   return (
@@ -68,6 +69,7 @@ class JoinedGroupsPage extends Component {
                   onPress={() =>
                     this.props.navigation.navigate('SingleGroup', {
                       name: group.name,
+                      goal: group.goal,
                       members: group.members
                     })
                   }
@@ -81,24 +83,24 @@ class JoinedGroupsPage extends Component {
   }
 }
 
-class SingleGroup extends Component {
-  render() {
-    const {params} = this.props.navigation.state
-    const name = params ? params.name : null
-    const members = params ? params.members : null
-    console.log(members)
-    return (
-      <View>
-        <Text styles={styles.groupname}>{name}</Text>
-        {members.map(member => (
-          <Text styles={styles.groupname} key={member}>
-            {member}
-          </Text>
-        ))}
-      </View>
-    )
-  }
-}
+// class SingleGroup extends Component {
+//   render() {
+//     const {params} = this.props.navigation.state
+//     const name = params ? params.name : null
+//     const members = params ? params.members : null
+//     console.log(members)
+//     return (
+//       <View>
+//         <Text styles={styles.groupname}>{name}</Text>
+//         {members.map(member => (
+//           <Text styles={styles.groupname} key={member}>
+//             {member}
+//           </Text>
+//         ))}
+//       </View>
+//     )
+//   }
+// }
 
 const App = createAppContainer(
   createStackNavigator({
