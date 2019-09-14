@@ -2,6 +2,7 @@ import React from 'react'
 import {Text, View, Image, StyleSheet, Button} from 'react-native'
 import {TouchableHighlight, ScrollView} from 'react-native-gesture-handler'
 import {createStackNavigator, createAppContainer} from 'react-navigation'
+import {firestore, firebaseApp} from '../firebase/firebase'
 
 export function SingleGroup(props) {
   console.log(props.navigation)
@@ -17,7 +18,10 @@ export function SingleGroup(props) {
         <Text style={styles.groupinfo}>{goal}</Text>
       </View>
       <ScrollView contentContainerStyle={styles.container}>
-        <Text>Members go in here</Text>
+        <Text>
+          firestore.ref(`Group_Enrollment/${name}`).once('value')
+          .then((snapshot) => {console.log(snapshot.val())})
+        </Text>
       </ScrollView>
       <Text />
     </View>
@@ -27,7 +31,7 @@ export function SingleGroup(props) {
 const styles = StyleSheet.create({
   postContainer: {
     flex: 1,
-    padding: 10,
+    padding: 5,
     borderBottomColor: '#dadada',
     borderBottomWidth: 1
   },

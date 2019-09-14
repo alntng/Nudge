@@ -12,10 +12,10 @@ import {List, ListItem} from 'react-native-elements'
 import {NavigationBar} from '@shoutem/ui'
 
 import {Header} from './components/Header'
-import {GroupList} from './components/GroupList'
 import {collectAll} from './firebase/functions'
 import {firestore, firebaseApp} from './firebase/firebase'
 import {SingleGroup} from './components/SingleGroups'
+import JoinedGroupsPage from './components/JoinedGroupsPage'
 
 const HomePage = props => {
   return (
@@ -29,59 +29,59 @@ const HomePage = props => {
   )
 }
 
-class JoinedGroupsPage extends Component {
-  constructor(props) {
-    super(props)
+// class JoinedGroupsPage extends Component {
+//   constructor(props) {
+//     super(props)
 
-    this.state = {
-      groups: []
-    }
-  }
+//     this.state = {
+//       groups: []
+//     }
+//   }
 
-  async componentDidMount() {
-    firestore.collection('Groups').onSnapshot(querySnapshot => {
-      const container = []
+//   async componentDidMount() {
+//     firestore.collection('Groups').onSnapshot(querySnapshot => {
+//       const container = []
 
-      querySnapshot.forEach(doc => {
-        container.push(doc.data())
-      })
-      this.setState({groups: container})
-    })
-  }
+//       querySnapshot.forEach(doc => {
+//         container.push(doc.data())
+//       })
+//       this.setState({groups: container})
+//     })
+//   }
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Header text="Add New Group" />
-        <ScrollView style={styles.scrollContainer}>
-          {this.state.groups &&
-            this.state.groups.map(group => (
-              <View style={styles.postContainer} key={group.name}>
-                <View style={styles.container}>
-                  <Text style={styles.groupname}>{group.name}</Text>
-                </View>
-                <Text style={styles.groupinfo}>{group.goal}</Text>
+//   render() {
+//     return (
+//       <View style={styles.container}>
+//         <Header text="Add New Group" />
+//         <ScrollView style={styles.scrollContainer}>
+//           {this.state.groups &&
+//             this.state.groups.map(group => (
+//               <View style={styles.postContainer} key={group.name}>
+//                 <View style={styles.container}>
+//                   <Text style={styles.groupname}>{group.name}</Text>
+//                 </View>
+//                 <Text style={styles.groupinfo}>{group.goal}</Text>
 
-                <Button
-                  title="Group Members"
-                  members={group.menbers}
-                  name={group.name}
-                  onPress={() =>
-                    this.props.navigation.navigate('SingleGroup', {
-                      name: group.name,
-                      goal: group.goal,
-                      members: group.members
-                    })
-                  }
-                />
-                <Text>Check out your groups plan</Text>
-              </View>
-            ))}
-        </ScrollView>
-      </View>
-    )
-  }
-}
+//                 <Button
+//                   title="Group Members"
+//                   members={group.menbers}
+//                   name={group.name}
+//                   onPress={() =>
+//                     this.props.navigation.navigate('SingleGroup', {
+//                       name: group.name,
+//                       goal: group.goal,
+//                       members: group.members
+//                     })
+//                   }
+//                 />
+//                 <Text>Check out your groups plan</Text>
+//               </View>
+//             ))}
+//         </ScrollView>
+//       </View>
+//     )
+//   }
+// }
 
 // class SingleGroup extends Component {
 //   render() {
