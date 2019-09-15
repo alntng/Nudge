@@ -1,31 +1,57 @@
-import React from 'react'
+import React, {Component} from 'react'
 import {Text, View, Image, StyleSheet, Button} from 'react-native'
 import {TouchableHighlight, ScrollView} from 'react-native-gesture-handler'
 import {createStackNavigator, createAppContainer} from 'react-navigation'
 import {firestore, firebaseApp} from '../firebase/firebase'
 
-export function SingleGroup(props) {
-  console.log(props.navigation)
-  const {navigation} = props
-  const name = navigation.getParam('name', 'No Group Name')
-  const goal = navigation.getParam('goal', 'This group has no ambition')
-  const members = navigation.getParam('members', 'No Group Members')
+export default class SingleGroup extends Component {
+  constructor(props) {
+    super(props)
 
-  return (
-    <View style={styles.postContainer}>
-      <View style={styles.container}>
-        <Text style={styles.groupname}>{name}</Text>
-        <Text style={styles.groupinfo}>{goal}</Text>
+    this.state = {
+      members: {}
+    }
+  }
+
+  async componentDidMount() {
+    firestore
+      .collection('GroupUsers')
+      .where(
+        'name',
+        '==',
+        this.props.navigation.getParam('name', 'No Group Name')
+      )
+      .onSnapshot(snapshot => {
+        snapshot.forEach(snap => this.setState({members: snap.data().members}))
+      })
+  }
+
+  render() {
+    const {navigation} = this.props
+    const name = navigation.getParam('name', 'No Group Name')
+    const goal = navigation.getParam('goal', 'This group has no ambition')
+    const membersArr = Object.keys(this.state.members)
+    console.log(membersArr)
+    // const members = navigation.getParam('members', 'No Group Members')
+
+    return (
+      <View style={styles.postContainer}>
+        <View style={styles.container}>
+          <Text style={styles.groupname}>{name}</Text>
+          <Text style={styles.groupinfo}>{goal}</Text>
+        </View>
+        <ScrollView contentContainerStyle={styles.container}>
+          {this.state.members &&
+            membersArr.map(member => (
+              <View key={member} style={styles.container}>
+                <Text key={member}>{member}</Text>
+              </View>
+            ))}
+        </ScrollView>
+        <Text />
       </View>
-      <ScrollView contentContainerStyle={styles.container}>
-        <Text>
-          firestore.ref(`Group_Enrollment/${name}`).once('value')
-          .then((snapshot) => {console.log(snapshot.val())})
-        </Text>
-      </ScrollView>
-      <Text />
-    </View>
-  )
+    )
+  }
 }
 
 const styles = StyleSheet.create({

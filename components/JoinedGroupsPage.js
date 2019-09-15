@@ -46,8 +46,7 @@ export default class JoinedGroupsPage extends Component {
                   onPress={() =>
                     this.props.navigation.navigate('SingleGroup', {
                       name: group.name,
-                      goal: group.goal,
-                      members: group.members
+                      goal: group.goal
                     })
                   }
                 />

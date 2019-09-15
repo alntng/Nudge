@@ -26,6 +26,11 @@ const collectAll = async (collectionPath, callback) => {
   }
 }
 
+const collectGroupMembers = async groupName => {
+  console.log('Getting Group members')
+  await firestore.collection('GroupUsers').where('name', '==', groupName)
+}
+
 // const getAllGroups = async callback => {
 //   try {
 //     console.log('Calling Firestore')

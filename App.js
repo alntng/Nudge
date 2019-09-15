@@ -14,7 +14,7 @@ import {NavigationBar} from '@shoutem/ui'
 import {Header} from './components/Header'
 import {collectAll} from './firebase/functions'
 import {firestore, firebaseApp} from './firebase/firebase'
-import {SingleGroup} from './components/SingleGroups'
+import SingleGroup from './components/SingleGroups'
 import JoinedGroupsPage from './components/JoinedGroupsPage'
 
 const HomePage = props => {
