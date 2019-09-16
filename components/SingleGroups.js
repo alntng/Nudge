@@ -3,13 +3,14 @@ import {Text, View, Image, StyleSheet, Button} from 'react-native'
 import {TouchableHighlight, ScrollView} from 'react-native-gesture-handler'
 import {createStackNavigator, createAppContainer} from 'react-navigation'
 import {firestore, firebaseApp} from '../firebase/firebase'
+import {SingleGroupHeader} from './SingleGroupHeader'
 
 export default class SingleGroup extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      members: {}
+      members: {'Nobody is on this team yet': true}
     }
   }
 
@@ -31,11 +32,10 @@ export default class SingleGroup extends Component {
     const name = navigation.getParam('name', 'No Group Name')
     const goal = navigation.getParam('goal', 'This group has no ambition')
     const membersArr = Object.keys(this.state.members)
-    console.log(membersArr)
-    // const members = navigation.getParam('members', 'No Group Members')
 
     return (
       <View style={styles.postContainer}>
+        <SingleGroupHeader title="Add Members" name={name} />
         <View style={styles.container}>
           <Text style={styles.groupname}>{name}</Text>
           <Text style={styles.groupinfo}>{goal}</Text>

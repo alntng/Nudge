@@ -4,11 +4,24 @@ import 'firebase/firestore'
 import {firestore} from './firebase'
 
 const createGroup = async (name, goal) => {
-  firestore
+  await firestore
     .collection('Groups')
     .doc()
     .set({name: name, goal: goal})
+
+  await firestore
+    .collection('GroupUsers')
+    .doc()
+    .set({name: name, members: {}})
 }
+
+// const addMember = async (name, teamName) => {
+//   firestore
+//   .collection('GroupUsers')
+//   .where('name','==',teamName)
+//   .update()
+
+// }
 
 const collectAll = async (collectionPath, callback) => {
   try {

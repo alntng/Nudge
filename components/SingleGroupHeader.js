@@ -1,9 +1,8 @@
 import React, {Component} from 'react'
 import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native'
+import {AddMember} from './AddMember'
 
-import {CreatePost} from './CreatePost'
-
-export class Header extends Component {
+export class SingleGroupHeader extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -22,12 +21,10 @@ export class Header extends Component {
           onPress={() => this.setState({isModalVisible: true})}
           style={styles.buttonContainer}
         >
-          <Image
-            style={styles.button}
-            source={require('./../assets/images/NewPost.png')}
-          />
+          <Text>Add someone to {this.props.name}</Text>
 
-          <CreatePost
+          <AddMember
+            name={this.props.name}
             isModalVisible={this.state.isModalVisible}
             closeModal={() => this.closeModal()}
           />
