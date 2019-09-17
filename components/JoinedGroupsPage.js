@@ -50,7 +50,6 @@ export default class JoinedGroupsPage extends Component {
                     })
                   }
                 />
-                <Text>Check out your groups plan</Text>
               </View>
             ))}
         </ScrollView>

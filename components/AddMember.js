@@ -14,19 +14,29 @@ export class AddMember extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      member: ''
+      member: '',
+      teamName: ''
     }
     this.logGroup = this.logGroup.bind(this)
   }
 
-  logGroup() {
-    let group = {}
+  async componentDidMount() {
+    this.setState({teamName: this.props.name})
+  }
+
+  logGroup(newMember, teamName) {
+    const groupId = ''
     firestore
       .collection('GroupUsers')
-      .where('name', '==', 'Troop 150')
-      .data()
+      .where('name', '==', teamName)
+      .onSnapshot(snapshot => {
+        snapshot
+          .docChanges()
+          .forEach(change => console.log(change.doc.data().members))
+      })
+    //   .update({members: {newMember: true}})
 
-    console.log(group)
+    // console.log(members, '*********')
   }
 
   render() {
@@ -55,13 +65,16 @@ export class AddMember extends Component {
             multiline={true}
             numberOfLines={4}
             onChangeText={member => this.setState({member})}
-            placeholder="Who do you want to add to this group?"
+            placeholder={'Who do you want to add to this group?'}
             value={this.state.member}
             style={styles.input}
           />
         </View>
 
-        <Button title="Add new member" onPress={() => this.logGroup()} />
+        <Button
+          title="Add new member"
+          onPress={() => this.logGroup(this.state.member, this.state.teamName)}
+        />
       </Modal>
     )
   }
